@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/matchesListFragment">
+
+    <fragment
+        android:id="@+id/matchesListFragment"
+        android:name="com.sport.matchesinfo.view.MatchesListFragment"
+        android:label="matches_list_fragment"
+        tools:layout="@layout/matches_list_fragment" >
+        <action
+            android:id="@+id/action_matchesListFragment_to_matchDetailsFragment"
+            app:destination="@id/matchDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/matchDetailsFragment"
+        android:name="com.sport.matchesinfo.view.MatchDetailsFragment"
+        android:label="match_details_fragment"
+        tools:layout="@layout/match_details_fragment" >
+        <action
+            android:id="@+id/action_matchDetailsFragment_to_matchesListFragment"
+            app:destination="@id/matchesListFragment" />
+    </fragment>
+</navigation>
