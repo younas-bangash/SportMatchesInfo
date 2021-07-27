@@ -23,33 +23,41 @@ android {
         }
     }
 
+    flavorDimensions 'default'
+
     productFlavors {
         dev {
             // Development Environment
+            dimension 'default'
         }
 
         sit {
             // System Integration Test [Software developer and QA engineer]
+            dimension 'default'
         }
 
         uat {
             // User Acceptance Test [Client]
+            dimension 'default'
         }
 
         prod {
             // Production [Public user]
+            dimension 'default'
         }
     }
 
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
-
+            minifyEnabled false
+            debuggable true
         }
     }
 
@@ -63,9 +71,8 @@ android {
     }
 
     variantFilter { variant ->
-        def names = variant.flavors*.name
-        // To check for a certain build type, use variant.buildType.name
-        if (names.contains("prod") && names.contains("debug")) {
+        // To check for a certain build type
+        if (variant.name == "prodDebug") {
             // Ignore the variant of prodDebug
             // Gradle ignores any variants that satisfy the conditions above.
             setIgnore(true)
@@ -74,7 +81,7 @@ android {
 }
 
 dependencies {
-    def lifecycle_version = "2.2.0"
+    def lifecycle_version = "2.3.1"
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
