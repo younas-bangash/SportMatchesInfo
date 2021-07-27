@@ -12,13 +12,9 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 class MatchesListFragment : DaggerFragment() {
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(MatchesListViewModel::class.java)
-    }
+    val viewModel = ViewModelProvider(this, viewModelFactory).get(MatchesListViewModel::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

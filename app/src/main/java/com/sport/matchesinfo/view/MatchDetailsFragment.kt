@@ -11,13 +11,9 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 class MatchDetailsFragment : DaggerFragment() {
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
-    }
+    val viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

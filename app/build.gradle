@@ -36,21 +36,25 @@ android {
         dev {
             // Development Environment
             dimension 'default'
+            buildConfigField('String', 'BASE_HOST_URL', '"https://run.mocky.io/v3/"')
         }
 
         sit {
             // System Integration Test [Software developer and QA engineer]
             dimension 'default'
+            buildConfigField('String', 'BASE_HOST_URL', '"https://run.mocky.io/v3/"')
         }
 
         uat {
             // User Acceptance Test [Client]
             dimension 'default'
+            buildConfigField('String', 'BASE_HOST_URL', '"https://run.mocky.io/v3/"')
         }
 
         prod {
             // Production [Public user]
             dimension 'default'
+            buildConfigField('String', 'BASE_HOST_URL', '"https://run.mocky.io/v3/"')
         }
     }
 
@@ -99,6 +103,12 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger_version"
     implementation "com.google.dagger:dagger-android-support:$rootProject.dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger_version"
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_version"

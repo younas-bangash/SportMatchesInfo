@@ -3,6 +3,7 @@ package com.sport.matchesinfo.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sport.matchesinfo.viewmodels.FragmentContainerViewModel
+import com.sport.matchesinfo.viewmodels.MatchDetailsViewModel
 import com.sport.matchesinfo.viewmodels.MatchesListViewModel
 import dagger.Binds
 import dagger.Module
@@ -21,4 +22,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MatchesListViewModel::class)
     internal abstract fun bindMatchesListViewModel(viewModel: MatchesListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MatchDetailsViewModel::class)
+    internal abstract fun bindMatchDetailsViewModel(viewModel: MatchDetailsViewModel): ViewModel
 }
