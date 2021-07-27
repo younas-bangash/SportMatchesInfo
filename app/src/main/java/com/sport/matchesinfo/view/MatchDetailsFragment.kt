@@ -1,21 +1,23 @@
 package com.sport.matchesinfo.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.sport.matchesinfo.R
 import com.sport.matchesinfo.viewmodels.MatchDetailsViewModel
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class MatchDetailsFragment : Fragment() {
+class MatchDetailsFragment : DaggerFragment() {
 
-    companion object {
-        fun newInstance() = MatchDetailsFragment()
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
     }
-
-    private lateinit var viewModel: MatchDetailsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,11 +25,4 @@ class MatchDetailsFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.match_details_fragment, container, false)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MatchDetailsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }
