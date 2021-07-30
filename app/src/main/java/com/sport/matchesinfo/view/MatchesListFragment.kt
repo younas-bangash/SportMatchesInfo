@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.sport.matchesinfo.adapters.MoviesListAdapter
 import com.sport.matchesinfo.data.ApiResult
@@ -18,6 +19,8 @@ import javax.inject.Inject
  * Fragment to display the list of movies
  */
 class MatchesListFragment : DaggerFragment() {
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var adapter: MoviesListAdapter
@@ -46,16 +49,23 @@ class MatchesListFragment : DaggerFragment() {
     }
 
     private fun initUi(binding: MatchesListFragmentBinding) {
+        swipeRefreshLayout = binding.swipeRefreshLayout;
         val layoutManager = LinearLayoutManager(context)
         binding.moviesList.layoutManager = layoutManager
         adapter = MoviesListAdapter(ArrayList())
         binding.moviesList.adapter = adapter
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = true
+            viewModel.fetchMovies()
+        }
     }
 
     private fun subscribeUi(binding: MatchesListFragmentBinding) {
         viewModel.matchesListResponseMutableLiveData.observe(viewLifecycleOwner, { result ->
             when (result.status) {
                 ApiResult.Status.SUCCESS -> {
+                    swipeRefreshLayout.isRefreshing = false
                     result.data?.let { list ->
                         adapter.updateData(list)
                     }
@@ -63,6 +73,7 @@ class MatchesListFragment : DaggerFragment() {
                 }
 
                 ApiResult.Status.ERROR -> {
+                    swipeRefreshLayout.isRefreshing = false
                     result.message?.let {
                         Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                     }
@@ -70,10 +81,13 @@ class MatchesListFragment : DaggerFragment() {
                 }
 
                 ApiResult.Status.LOADING -> {
-                    binding.loading.visibility = View.VISIBLE
+                    if (swipeRefreshLayout.isRefreshing) {
+                        binding.loading.visibility = View.GONE
+                    } else {
+                        binding.loading.visibility = View.VISIBLE
+                    }
                 }
             }
-
         })
     }
 }

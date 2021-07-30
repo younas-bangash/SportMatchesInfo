@@ -10,8 +10,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
-class MatchesListViewModel @Inject constructor(private val repository: MatchesListRepository) :
-    ViewModel() {
+class MatchesListViewModel @Inject constructor(private val repository: MatchesListRepository) : ViewModel() {
     val matchesListResponseMutableLiveData = MutableLiveData<ApiResult<ArrayList<MatchDetails>>>()
 
     internal fun fetchMovies() {
