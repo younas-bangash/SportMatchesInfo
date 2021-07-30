@@ -2,6 +2,7 @@ package com.sport.matchesinfo.di
 
 import com.sport.matchesinfo.BuildConfig
 import com.sport.matchesinfo.api.Webservice
+import com.sport.matchesinfo.data.NetworkClient
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -24,12 +25,18 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun getNetworkClient(retrofit: Retrofit): NetworkClient {
+        return NetworkClient(retrofit)
+    }
+
+    @Provides
+    @Singleton
     fun getOkHttpClient(): OkHttpClient {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
 
         httpLoggingInterceptor.level =
             if (BuildConfig.DEBUG)
-                HttpLoggingInterceptor.Level.BASIC
+                HttpLoggingInterceptor.Level.BODY
             else
                 HttpLoggingInterceptor.Level.NONE
 

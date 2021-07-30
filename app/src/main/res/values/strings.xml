@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SportMatchesInfo</string>
+    <string name="app_name">Sport Matches Info</string>
+    <string name="title_vs">V/S</string>
 </resources>
