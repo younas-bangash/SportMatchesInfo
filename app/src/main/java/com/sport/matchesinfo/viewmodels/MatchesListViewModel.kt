@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
+/**
+ * ViewModel for the [MatchesListFragment]
+ */
 class MatchesListViewModel @Inject constructor(private val repository: MatchesListRepository) :
     ViewModel() {
     val matchesListResponseMutableLiveData = MutableLiveData<ApiResult<List<MatchDetails>>>()

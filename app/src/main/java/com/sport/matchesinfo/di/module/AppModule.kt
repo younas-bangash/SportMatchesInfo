@@ -25,8 +25,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getNetworkClient(retrofit: Retrofit): NetworkClient {
-        return NetworkClient(retrofit)
+    fun getNetworkClient(): NetworkClient {
+        return NetworkClient()
     }
 
     @Provides

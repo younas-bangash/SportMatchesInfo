@@ -2,6 +2,7 @@ package com.sport.matchesinfo.di
 
 import android.content.Context
 import com.sport.matchesinfo.MainApplication
+import com.sport.matchesinfo.api.Webservice
 import com.sport.matchesinfo.di.module.*
 import dagger.BindsInstance
 import dagger.Component

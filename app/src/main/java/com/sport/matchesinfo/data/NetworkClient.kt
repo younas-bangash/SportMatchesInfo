@@ -1,5 +1,8 @@
 package com.sport.matchesinfo.data
 
+import android.app.Application
+import com.sport.matchesinfo.MainApplication
+import com.sport.matchesinfo.api.Webservice
 import com.sport.matchesinfo.utils.ErrorUtils
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -8,8 +11,12 @@ import javax.inject.Inject
 /**
  * This class will be used to invoke the service call
  */
-class NetworkClient @Inject constructor(private val retrofit: Retrofit) {
-    internal suspend fun <T> getResponse(
+open class NetworkClient {
+
+    @Inject
+    lateinit var retrofit: Retrofit
+
+    open suspend fun <T> getResponse(
         request: suspend () -> Response<T>
     ): ApiResult<T> {
         return try {
