@@ -1,19 +1,11 @@
 package com.sport.matchesinfo.data
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkCapabilities
-import androidx.core.content.ContextCompat.getSystemService
 import com.sport.matchesinfo.api.Webservice
 import com.sport.matchesinfo.data.local.MatchDetailsDao
-import com.sport.matchesinfo.utils.ErrorUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import retrofit2.Response
-import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,10 +18,13 @@ class MatchesListRepository @Inject constructor(
     private val networkClient: NetworkClient,
     private val matchDetailsDao: MatchDetailsDao
 ) {
-    suspend fun fetchMatchesList(isNetworkAvailable : Boolean, token: String): Flow<ApiResult<List<MatchDetails>>?> {
+    suspend fun fetchMatchesList(
+        fetchFromServer: Boolean,
+        token: String
+    ): Flow<ApiResult<List<MatchDetails>>?> {
         return flow {
             emit(ApiResult.loading())
-            if (!isNetworkAvailable) {
+            if (!fetchFromServer) {
                 // If network is not available fetch the record from DB
                 emit(ApiResult.success(matchDetailsDao.getAll()))
             } else {
@@ -40,14 +35,24 @@ class MatchesListRepository @Inject constructor(
                 // Cache to database if response is successful
                 if (result.status == ApiResult.Status.SUCCESS) {
                     result.data?.let { list ->
-                        matchDetailsDao.deleteAll() // Clear the Previous Cache data
+                        deleteAll(result.data)
                         matchDetailsDao.insertAll(list)
+                        emit(ApiResult.success(matchDetailsDao.getAll()))
                     }
-                    emit(ApiResult.success(matchDetailsDao.getAll()))
                 } else {
                     emit(result)
                 }
             }
         }.flowOn(Dispatchers.IO)
+    }
+
+    private fun deleteAll(data: ArrayList<MatchDetails>) {
+        // Clear the Previous Cache data
+        for (item in data) {
+            matchDetailsDao.deleteRow(
+                item.firstTeamName,
+                item.secondTeamName
+            )
+        }
     }
 }

@@ -14,6 +14,6 @@ interface MatchDetailsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<MatchDetails>)
 
-    @Query("DELETE FROM matchDetails")
-    fun deleteAll()
+    @Query("DELETE FROM matchDetails WHERE firstTeamName = :firstTeamName AND secondTeamName = :secondTeamName")
+    fun deleteRow(firstTeamName: String, secondTeamName: String)
 }

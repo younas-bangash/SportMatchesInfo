@@ -76,6 +76,7 @@ class MatchesListFragment : DaggerFragment() {
                         adapter.updateData(list)
                     }
                     binding.loading.visibility = View.GONE
+                    binding.moviesList.visibility = View.VISIBLE
                 }
 
                 ApiResult.Status.ERROR -> {
@@ -84,9 +85,11 @@ class MatchesListFragment : DaggerFragment() {
                         Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
                     }
                     binding.loading.visibility = View.GONE
+                    binding.moviesList.visibility = View.VISIBLE
                 }
 
                 ApiResult.Status.LOADING -> {
+                    binding.moviesList.visibility = View.GONE
                     if (swipeRefreshLayout.isRefreshing) {
                         binding.loading.visibility = View.GONE
                     } else {
