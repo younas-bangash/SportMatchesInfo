@@ -29,7 +29,7 @@ class MatchesListRepository @Inject constructor(
                 emit(ApiResult.success(matchDetailsDao.getAll()))
             } else {
                 val result = networkClient.getResponse(request = {
-                    webserviceInterface.fetchMatchesList(token)
+                    webserviceInterface.getRequest(token)
                 })
 
                 // Cache to database if response is successful

@@ -10,5 +10,5 @@ import retrofit2.http.Path
  */
 interface Webservice {
     @GET("{token}")
-    suspend fun fetchMatchesList(@Path("token") token: String): Response<ArrayList<MatchDetails>>
+    suspend fun getRequest(@Path("token") token: String): Response<ArrayList<MatchDetails>>
 }
