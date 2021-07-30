@@ -1,4 +1,4 @@
-package com.sport.matchesinfo.di
+package com.sport.matchesinfo.di.module
 
 import com.sport.matchesinfo.view.FragmentContainerActivity
 import dagger.Module

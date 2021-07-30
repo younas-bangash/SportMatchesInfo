@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 class MatchesListViewModel @Inject constructor(private val repository: MatchesListRepository) : ViewModel() {
-    val matchesListResponseMutableLiveData = MutableLiveData<ApiResult<ArrayList<MatchDetails>>>()
+    val matchesListResponseMutableLiveData = MutableLiveData<ApiResult<List<MatchDetails>>>()
 
-    internal fun fetchMovies() {
+    internal fun fetchMovies(isNetworkAvailable : Boolean) {
         viewModelScope.launch {
-            repository.fetchMatchesList("bc1ce3b7-6ad2-4fef-af6c-08f8865b210e")
+            repository.fetchMatchesList(isNetworkAvailable, "bc1ce3b7-6ad2-4fef-af6c-08f8865b210e")
                 .collect {
                     matchesListResponseMutableLiveData.value = it
                 }

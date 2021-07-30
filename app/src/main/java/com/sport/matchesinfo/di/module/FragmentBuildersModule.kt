@@ -1,4 +1,4 @@
-package com.sport.matchesinfo.di
+package com.sport.matchesinfo.di.module
 
 import com.sport.matchesinfo.view.MatchDetailsFragment
 import com.sport.matchesinfo.view.MatchesListFragment

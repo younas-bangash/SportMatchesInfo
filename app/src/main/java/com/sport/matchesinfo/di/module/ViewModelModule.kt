@@ -1,8 +1,9 @@
-package com.sport.matchesinfo.di
+package com.sport.matchesinfo.di.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.sport.matchesinfo.viewmodels.FragmentContainerViewModel
+import com.sport.matchesinfo.di.ViewModelFactory
+import com.sport.matchesinfo.di.ViewModelKey
 import com.sport.matchesinfo.viewmodels.MatchDetailsViewModel
 import com.sport.matchesinfo.viewmodels.MatchesListViewModel
 import dagger.Binds

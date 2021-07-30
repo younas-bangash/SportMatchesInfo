@@ -2,6 +2,7 @@ package com.sport.matchesinfo.di
 
 import android.content.Context
 import com.sport.matchesinfo.MainApplication
+import com.sport.matchesinfo.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -19,7 +20,8 @@ import javax.inject.Singleton
         ActivityBuildersModule::class,
         FragmentBuildersModule::class,
         ViewModelModule::class,
-        AppModule::class
+        AppModule::class,
+        DatabaseModule::class
     ]
 )
 interface ApplicationComponent : AndroidInjector<MainApplication> {

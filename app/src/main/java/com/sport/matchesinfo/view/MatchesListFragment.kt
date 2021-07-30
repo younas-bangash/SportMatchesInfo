@@ -1,9 +1,14 @@
 package com.sport.matchesinfo.view
 
+import android.content.Context
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.net.*
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,6 +19,7 @@ import com.sport.matchesinfo.databinding.MatchesListFragmentBinding
 import com.sport.matchesinfo.viewmodels.MatchesListViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
+
 
 /**
  * Fragment to display the list of movies
@@ -33,7 +39,7 @@ class MatchesListFragment : DaggerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.fetchMovies()
+        viewModel.fetchMovies(isNetworkAvailable())
     }
 
     override fun onCreateView(
@@ -57,7 +63,7 @@ class MatchesListFragment : DaggerFragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
-            viewModel.fetchMovies()
+            viewModel.fetchMovies(isNetworkAvailable())
         }
     }
 
@@ -89,5 +95,22 @@ class MatchesListFragment : DaggerFragment() {
                 }
             }
         })
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = requireContext().getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nw = connectivityManager.activeNetwork ?: return false
+            val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+            return when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+                else -> false
+            }
+        } else {
+            return connectivityManager.activeNetworkInfo?.isConnected ?: false
+        }
     }
 }
