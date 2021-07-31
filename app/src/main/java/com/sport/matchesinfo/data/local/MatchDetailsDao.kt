@@ -7,7 +7,7 @@ import com.sport.matchesinfo.data.MatchDetails
  * Interface for the Database operations
  */
 @Dao
-interface MatchDetailsDao {
+public interface MatchDetailsDao {
     @Query("SELECT * FROM matchDetails")
     fun getAll(): List<MatchDetails>?
 

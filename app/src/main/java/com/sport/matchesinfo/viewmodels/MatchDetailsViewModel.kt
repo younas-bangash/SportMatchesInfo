@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * Details screen ViewModel
+ */
 class MatchDetailsViewModel @Inject constructor() : ViewModel() {
 
     companion object {
