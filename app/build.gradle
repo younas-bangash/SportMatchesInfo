@@ -103,6 +103,15 @@ android {
             options.compilerArgs << "-Xmaxerrs" << "500"
         }
     }
+
+    packagingOptions {
+        // Multiple dependency bring these files in. Exclude them to enable
+        // our test APK to build (has no effect on our AARs)
+        excludes += "/META-INF/AL2.0"
+        excludes += "/META-INF/LGPL2.1"
+        exclude "**/attach_hotspot_windows.dll"
+        exclude "META-INF/licenses/**"
+    }
 }
 
 dependencies {
@@ -154,6 +163,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // AndroidX Test - Instrumented testing
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1"
     androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
     androidTestImplementation "androidx.test.ext:junit-ktx:$rootProject.androidXTestExtKotlinRunnerVersion"
     androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"

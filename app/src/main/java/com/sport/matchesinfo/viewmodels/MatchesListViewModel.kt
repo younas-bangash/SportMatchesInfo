@@ -7,9 +7,7 @@ import com.sport.matchesinfo.data.ApiResult
 import com.sport.matchesinfo.data.MatchDetails
 import com.sport.matchesinfo.data.MatchesListRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
 /**
